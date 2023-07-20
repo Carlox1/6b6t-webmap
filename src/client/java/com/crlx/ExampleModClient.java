@@ -1,7 +1,9 @@
 package com.crlx;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientChunkEvents;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayConnectionEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ServerInfo;
@@ -14,9 +16,18 @@ import net.minecraft.world.Heightmap;
 import java.io.IOException;
 
 public class ExampleModClient implements ClientModInitializer {
+
+	public class ModCommandRegister {
+		public static void registerCommands() {
+			ClientCommandRegistrationCallback.EVENT.register(CommandHandler::register);
+		}
+	}
+
 	@Override
 	public void onInitializeClient() {
+		ModCommandRegister.registerCommands();
 		ClientChunkEvents.CHUNK_LOAD.register((clientWorld, worldChunk) -> {
+			if (!CommandHandler.webmap) return;
 			ServerInfo serverInfo = MinecraftClient.getInstance().getCurrentServerEntry();
 			if (serverInfo == null || !serverInfo.address.contains("6b6t.org")) return;
 			if (clientWorld.getDifficulty() != Difficulty.HARD) return;
