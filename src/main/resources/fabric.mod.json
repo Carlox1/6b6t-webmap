@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "crlxwebmap",
+	"version": "${version}",
+	"name": "crlxwebmap",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/crlxwebmap/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.crlx.ExampleMod"
+		],
+		"client": [
+			"com.crlx.ExampleModClient"
+		]
+	},
+	"mixins": [
+		"crlxwebmap.mixins.json",
+		{
+			"config": "crlxwebmap.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "~1.19.3",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
